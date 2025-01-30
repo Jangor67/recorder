@@ -2,7 +2,7 @@
 
 camip=${1:-'192.168.1.101'}
 camname=${2:-'cam1'}
-basepath=${3:-'/media/jan/PHILIPS UFD'}
+basepath=${3:-'/mnt/usb1'}
 
 if [ ! -d "$basepath" ]; then
   echo "unable to find basepath: $basepath"
