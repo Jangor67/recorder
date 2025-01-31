@@ -15,14 +15,25 @@ remove_oldest_directory() {
     if [[ "$DIR_CNT2" -ge "$DIR_CNT3" ]]; then
       OLDEST_DIR=$(ls -1 "$basepath/cam2" | sort | head -n 1)
       COMPLETE_PATH="$basepath/cam2/$OLDEST_DIR"
+      # go one level deeper
+      OLDEST_DIR=$(ls -1 "$COMPLETE_PATH" | sort | head -n 1)
+      if [ -n "$OLDEST_DIR" ]; then
+        COMPLETE_PATH="$COMPLETE_PATH/$OLDEST_DIR"
+      fi
     else
       OLDEST_DIR=$(ls -1 "$basepath/cam3" | sort | head -n 1)
       COMPLETE_PATH="$basepath/cam3/$OLDEST_DIR"
+      # go one level deeper
+      OLDEST_DIR=$(ls -1 "$COMPLETE_PATH" | sort | head -n 1)
+      if [ -n "$OLDEST_DIR" ]; then
+        COMPLETE_PATH="$COMPLETE_PATH/$OLDEST_DIR"
+      fi
     fi
     
     if [ -n "$OLDEST_DIR" ]; then
         echo "Removing oldest directory: $COMPLETTE_PATH"
-        sudo rm -rf "$COMPLETE_PATH"
+        echo sudo rm -rf "$COMPLETE_PATH"
+        exit 1
     else
         echo "No directories found to delete."
     fi
