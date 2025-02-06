@@ -10,24 +10,13 @@ fi
 
 # Function to remove the oldest directory
 remove_oldest_directory() {
-    DIR_CNT2=$(ls -1 "$basepath/cam2" | wc -l)
-    DIR_CNT3=$(ls -1 "$basepath/cam3" | wc -l)
-    if [[ "$DIR_CNT2" -ge "$DIR_CNT3" ]]; then
-      OLDEST_DIR=$(ls -1 "$basepath/cam2" | sort | head -n 1)
-      COMPLETE_PATH="$basepath/cam2/$OLDEST_DIR"
-      # go one level deeper
-      OLDEST_DIR=$(ls -1 "$COMPLETE_PATH" | sort | head -n 1)
-      if [ -n "$OLDEST_DIR" ]; then
-        COMPLETE_PATH="$COMPLETE_PATH/$OLDEST_DIR"
-      fi
-    else
-      OLDEST_DIR=$(ls -1 "$basepath/cam3" | sort | head -n 1)
-      COMPLETE_PATH="$basepath/cam3/$OLDEST_DIR"
-      # go one level deeper
-      OLDEST_DIR=$(ls -1 "$COMPLETE_PATH" | sort | head -n 1)
-      if [ -n "$OLDEST_DIR" ]; then
-        COMPLETE_PATH="$COMPLETE_PATH/$OLDEST_DIR"
-      fi
+    culpritpath=$(du --max-depth=0 $basepath/* | sort -nr | awk 'NR==1 {print $2}')
+    OLDEST_DIR=$(ls -1 "$culpritpath" | sort | head -n 1)
+    COMPLETE_PATH="$culpritpath/$OLDEST_DIR"
+    # go one level deeper
+    OLDEST_DIR=$(ls -1 "$COMPLETE_PATH" | sort | head -n 1)
+    if [ -n "$OLDEST_DIR" ]; then
+      COMPLETE_PATH="$COMPLETE_PATH/$OLDEST_DIR"
     fi
     
     if [ -n "$COMPLETE_PATH" ]; then
