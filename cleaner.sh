@@ -21,7 +21,7 @@ remove_oldest_directory() {
     
     if [ -n "$COMPLETE_PATH" ]; then
         echo "Removing oldest directory: $COMPLETE_PATH"
-        sudo rm -rf "$COMPLETE_PATH"
+        rm -rf "$COMPLETE_PATH"
     else
         echo "No directories found to delete."
     fi
