@@ -39,4 +39,6 @@ while [[ "$USAGE" -ge "$threshold" ]]; do
     USAGE=$(df -h "$basepath" | awk 'NR==2 {print $5}' | sed 's/%//')
 done
 
+find "$basepath" -type d -empty -delete
+
 echo "Cleanup complete. Current usage: $USAGE%"
